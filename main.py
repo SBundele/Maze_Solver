@@ -7,7 +7,7 @@ def generateMaze(size, wall):
         for j in range(size):
             if random.randint(1, 60) <= wall:
                 maze[i][j] = "#"
-    
+                
     maze[0][0] = 'S'
     maze[size-1][size-1] = "E"
     
@@ -15,7 +15,7 @@ def generateMaze(size, wall):
 
 def displayMaze(maze):
     for row in maze:
-        print(row)    
+        print(row)   
 
 def find_path(maze, size, position = (0,0), visited = None):
     if visited is None:
@@ -35,13 +35,15 @@ def find_path(maze, size, position = (0,0), visited = None):
             path = find_path(maze, size, (new_row,new_col), visited)
             if path:
                 return [(position[0], position[1])] + path
-    
+
     return []
 
 def display_path(maze, path):
     for position in path:
         row,col = position
         maze[row][col] = "*"
+    maze[0][0] = 'S'
+    maze[len(maze)-1][len(maze)-1] = "E"
     displayMaze(maze)
 
 def main():
