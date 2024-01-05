@@ -1,22 +1,38 @@
 import random
+from colorama import init
+from termcolor import colored
 
+init()
+
+# Generate Maze Function
 def generateMaze(size, wall):
-    maze = [[" " for col in range(size)] for row in range(size)]
+    maze = [["◌" for col in range(size)] for row in range(size)]
     
     for i in range(size):
         for j in range(size):
             if random.randint(1, 60) <= wall:
-                maze[i][j] = "#"
+                maze[i][j] = "▓"
                 
-    maze[0][0] = 'S'
-    maze[size-1][size-1] = "E"
+    maze[0][0] = colored('|S|',"green","on_black")
+    maze[size-1][size-1] = colored('|E|',"green","on_black")
     
     return maze
 
+# Display Generate Maze Function
 def displayMaze(maze):
-    for row in maze:
-        print(row)   
+    for row in range(len(maze)):
+        for col in range(len(maze)):
+            if maze[row][col] == "◌":
+                print(colored("|◌|", "blue","on_black"), end=" ")
+            elif maze[row][col] == "▓":
+                print(colored("|▓|","red","on_black"), end=" ")
+            elif maze[row][col] == "◍":
+                print(colored("|◍|","green","on_black"),end=" ")
+            else:
+                print(maze[row][col], end= " ")
+        print() 
 
+# Finding Path Function
 def find_path(maze, size, position = (0,0), visited = None):
     if visited is None:
         visited = set()
@@ -31,19 +47,20 @@ def find_path(maze, size, position = (0,0), visited = None):
     for dir in direction:
         new_row,new_col = position[0] + dir[0], position[1] + dir[1]
         
-        if 0 <= new_row < size and 0 <= new_col < size and maze[new_row][new_col] != '#' and (new_row,new_col) not in visited:
+        if 0 <= new_row < size and 0 <= new_col < size and maze[new_row][new_col] != "▓" and (new_row,new_col) not in visited:
             path = find_path(maze, size, (new_row,new_col), visited)
             if path:
                 return [(position[0], position[1])] + path
 
     return []
 
+# Displaying Finded Path Function
 def display_path(maze, path):
     for position in path:
         row,col = position
-        maze[row][col] = "*"
-    maze[0][0] = 'S'
-    maze[len(maze)-1][len(maze)-1] = "E"
+        maze[row][col] = "◍"
+    maze[0][0] = colored('|S|',"green","on_black")
+    maze[len(maze)-1][len(maze)-1] = colored('|E|',"green","on_black")
     displayMaze(maze)
 
 def main():
@@ -51,7 +68,7 @@ def main():
     wall = int(input("Enter the wall percentage you want in the maze(1-25): "))
     
     maze = generateMaze(size, wall)
-    print("Generated Maze")
+    print("Generated Maze:")
     displayMaze(maze)
     
     while True:
