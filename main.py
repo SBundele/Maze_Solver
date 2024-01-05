@@ -23,13 +23,13 @@ def displayMaze(maze):
     for row in range(len(maze)):
         for col in range(len(maze)):
             if maze[row][col] == "◌":
-                print(colored("|◌|", "blue","on_black"), end=" ")
+                print(colored("|◌|", "blue","on_black"), end="")
             elif maze[row][col] == "▓":
-                print(colored("|▓|","red","on_black"), end=" ")
+                print(colored("|▓|","red","on_black"), end="")
             elif maze[row][col] == "◍":
-                print(colored("|◍|","green","on_black"),end=" ")
+                print(colored("|◍|","green","on_black"),end="")
             else:
-                print(maze[row][col], end= " ")
+                print(maze[row][col], end= "")
         print() 
 
 # Finding Path Function
